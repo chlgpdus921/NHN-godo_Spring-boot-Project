@@ -1,2 +1,2 @@
 # Spring-boot-Project
-1주차 방명록 구현 과제 입니다.
+최혜연(hyeyeon-choi) 1주차 방명록 구현 과제 입니다.
