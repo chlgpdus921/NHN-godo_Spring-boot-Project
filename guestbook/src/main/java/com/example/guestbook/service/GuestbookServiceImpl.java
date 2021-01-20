@@ -22,12 +22,13 @@ public class GuestbookServiceImpl implements GuestbookService {
     private final GuestbookRepository repository;
 
     @Override
-    public Long register(GuestbookDTO dto){
+    public Long register(GuestbookDTO dto) {
 
-        log.info("DTO------");
+        log.info("DTO---------");
         log.info(dto);
 
         Guestbook entity = dtoToEntity(dto);
+
         log.info(entity);
 
         repository.save(entity);
@@ -36,13 +37,14 @@ public class GuestbookServiceImpl implements GuestbookService {
     }
 
     @Override
-    public PageResultDTO <GuestbookDTO, Guestbook> getList (PageRequestDTO requestDTO){
+    public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO) {
+
         Pageable pageable = requestDTO.getPageable(Sort.by("gno").descending());
         Page<Guestbook> result = repository.findAll(pageable);
         Function<Guestbook, GuestbookDTO> fn = (entity -> entityToDto(entity));
-
         return new PageResultDTO<>(result, fn);
     }
+
 
     @Override
     public GuestbookDTO read(Long gno) {
@@ -59,13 +61,4 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     }
 
-    @Override
-    public Guestbook dtoToEntity(GuestbookDTO dto) {
-        return null;
-    }
-
-    @Override
-    public GuestbookDTO entityToDto(Guestbook entity) {
-        return null;
-    }
 }
