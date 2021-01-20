@@ -8,6 +8,10 @@
         <h1 class="mt-4">GuestBook Modify Page</h1>
         <form action="/guestbook/modify" method="post">
             <input type="hidden" name="page" th:value="${requestDTO.page}">
+            <input type="hidden" name="type" th:value="${requestDTO.type}">
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+
+
             <div class="form-group">
                 <label>Gno</label>
                 <input type="text" class="form-control" name="gno" th:value="${dto.gno}" readonly>
@@ -44,23 +48,42 @@
         <script th:inline="javascript">
             var actionForm = $("form");
 
-            $(".removeBtn").click(function(){
+            $(".removeBtn").click(function () {
 
                 actionForm.attr("action", "/guestbook/remove").attr("method", "post");
                 actionForm.submit();
             })
 
 
-            $(".modifyBtn").click(function(){
+            $(".modifyBtn").click(function () {
 
-                if(!confirm("수정하겠습니까?"))
+                if (!confirm("수정하겠습니까?"))
                     return;
 
                 actionForm
                     .attr("action", "/guestbook/modify")
-                    .attr("method","post")
+                    .attr("method", "post")
                     .submit();
             })
+
+            $(".listBtn").click(function () {
+
+                var page = $("input[name='page']");
+                var type = $("input[name='type']");
+                var keyword = $("input[name='keyword']");
+
+                actionForm.empty();
+                actionForm.append(page);
+                actionForm.append(type);
+                actionForm.append(keyword);
+                actionForm
+                    .attr("action", "/guestbook/list")
+                    .attr("method", "get");
+
+                actionForm.submit();
+
+            })
+
         </script>
     </th:block>
 
