@@ -22,12 +22,12 @@ public class MovieController {
     private final MovieService movieService; //final
 
     @GetMapping("/register")
-    public void register(){
+    public void register() {
 
     }
 
     @PostMapping("/register")
-    public String register(MovieDTO movieDTO, RedirectAttributes redirectAttributes){
+    public String register(MovieDTO movieDTO, RedirectAttributes redirectAttributes) {
         log.info("movieDTO: " + movieDTO);
 
         Long mno = movieService.register(movieDTO);
@@ -38,7 +38,7 @@ public class MovieController {
     }
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("pageRequestDTO: " + pageRequestDTO);
 
@@ -48,7 +48,7 @@ public class MovieController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(long mno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model ){
+    public void read(long mno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
 
         log.info("mno: " + mno);
 

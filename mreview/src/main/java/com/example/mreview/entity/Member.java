@@ -13,11 +13,11 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Table(name = "m_member")
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long mid;
+    private Long mid;
 
     private String email;
     private String pw;

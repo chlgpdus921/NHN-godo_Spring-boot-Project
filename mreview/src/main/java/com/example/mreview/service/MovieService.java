@@ -19,7 +19,7 @@ public interface MovieService {
 
     MovieDTO getMovie(Long mno);
 
-    default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, Double avg, Long reviewCnt){
+    default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, Double avg, Long reviewCnt) {
         MovieDTO movieDTO = MovieDTO.builder()
                 .mno(movie.getMno())
                 .title(movie.getTitle())
@@ -42,7 +42,7 @@ public interface MovieService {
 
     }
 
-    default Map<String, Object> dtoToEntity(MovieDTO movieDTO){
+    default Map<String, Object> dtoToEntity(MovieDTO movieDTO) {
 
         Map<String, Object> entityMap = new HashMap<>();
 
@@ -55,9 +55,9 @@ public interface MovieService {
 
         List<MovieImageDTO> imageDTOList = movieDTO.getImageDTOList();
 
-        if(imageDTOList != null && imageDTOList.size() > 0 ) { //MovieImageDTO 처리
+        if (imageDTOList != null && imageDTOList.size() > 0) { //MovieImageDTO 처리
 
-            List<MovieImage> movieImageList = imageDTOList.stream().map(movieImageDTO ->{
+            List<MovieImage> movieImageList = imageDTOList.stream().map(movieImageDTO -> {
 
                 MovieImage movieImage = MovieImage.builder()
                         .path(movieImageDTO.getPath())

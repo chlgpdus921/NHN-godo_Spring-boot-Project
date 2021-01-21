@@ -24,7 +24,7 @@ import java.util.function.Function;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository; //final
 
@@ -61,10 +61,10 @@ public class MovieServiceImpl implements MovieService{
 
 
         Function<Object[], MovieDTO> fn = (arr -> entitiesToDTO(
-                (Movie)arr[0] ,
-                (List<MovieImage>)(Arrays.asList((MovieImage)arr[1])),
+                (Movie) arr[0],
+                (List<MovieImage>) (Arrays.asList((MovieImage) arr[1])),
                 (Double) arr[2],
-                (Long)arr[3])
+                (Long) arr[3])
         );
 
         return new PageResultDTO<>(result, fn);
@@ -80,7 +80,7 @@ public class MovieServiceImpl implements MovieService{
         List<MovieImage> movieImageList = new ArrayList<>();
 
         result.forEach(arr -> {
-            MovieImage  movieImage = (MovieImage)arr[1];
+            MovieImage movieImage = (MovieImage) arr[1];
             movieImageList.add(movieImage);
         });
 

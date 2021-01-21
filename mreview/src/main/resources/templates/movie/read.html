@@ -9,17 +9,17 @@
 
 
         <div class="form-group">
-            <label >Title</label>
+            <label>Title</label>
             <input type="text" class="form-control" name="title" th:value="${dto.title}" readonly>
         </div>
 
         <div class="form-group">
-            <label >Review Count </label>
+            <label>Review Count </label>
             <input type="text" class="form-control" name="title" th:value="${dto.reviewCnt}" readonly>
         </div>
 
         <div class="form-group">
-            <label >Avg </label>
+            <label>Avg </label>
             <input type="text" class="form-control" name="title" th:value="${dto.avg}" readonly>
         </div>
 
@@ -51,15 +51,14 @@
         </style>
 
 
-
         <div class="uploadResult">
-            <ul >
+            <ul>
                 <li th:each="movieImage: ${dto.imageDTOList}" th:data-file="${movieImage.getThumbnailURL()}">
-                    <img  th:if="${movieImage.path != null}" th:src="|/display?fileName=${movieImage.getThumbnailURL()}|">
+                    <img th:if="${movieImage.path != null}"
+                         th:src="|/display?fileName=${movieImage.getThumbnailURL()}|">
                 </li>
             </ul>
         </div>
-
 
 
         <button type="button" class="btn btn-primary">
@@ -87,23 +86,23 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label >Reviewer ID</label>
-                            <input type="text" class="form-control" name="mid" >
+                            <label>Reviewer ID</label>
+                            <input type="text" class="form-control" name="mid">
                         </div>
                         <div class="form-group">
-                            <label >Grade <span class="grade"></span></label>
+                            <label>Grade <span class="grade"></span></label>
                             <div class='starrr'></div>
                         </div>
                         <div class="form-group">
-                            <label >Review Text</label>
-                            <input type="text" class="form-control" name="text" placeholder="Good Movie!" >
+                            <label>Review Text</label>
+                            <input type="text" class="form-control" name="text" placeholder="Good Movie!">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary reviewSaveBtn">Save changes</button>
-                        <button type="button" class="btn btn-warning modifyBtn">Modify </button>
-                        <button type="button" class="btn btn-danger removeBtn">Remove </button>
+                        <button type="button" class="btn btn-warning modifyBtn">Modify</button>
+                        <button type="button" class="btn btn-danger removeBtn">Remove</button>
                     </div>
                 </div>
             </div>
@@ -135,14 +134,14 @@
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 
         <script>
-            $(document).ready(function(e) {
+            $(document).ready(function (e) {
 
                 var grade = 0;
                 var mno = [[${dto.mno}]];
 
                 $('.starrr').starrr({
                     rating: grade,
-                    change: function(e, value){
+                    change: function (e, value) {
                         if (value) {
                             console.log(value);
                             grade = value;
@@ -168,19 +167,19 @@
                 });
 
 
-                $('.reviewSaveBtn').click(function() {
+                $('.reviewSaveBtn').click(function () {
 
-                    var data = { mno:mno, grade:grade, text:inputText.val(), mid: inputMid.val() };
+                    var data = {mno: mno, grade: grade, text: inputText.val(), mid: inputMid.val()};
 
                     console.log(data);
 
                     $.ajax({
-                        url:'/reviews/'+mno,
-                        type:"POST",
-                        data:JSON.stringify(data),
-                        contentType:"application/json; charset=utf-8",
-                        dataType:"text",
-                        success: function(result){
+                        url: '/reviews/' + mno,
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "text",
+                        success: function (result) {
 
                             console.log("result: " + result);
 
@@ -196,7 +195,7 @@
                 //페이지가 열리면 바로 리뷰 데이터들을 가져와서 사용한다.
                 function getMovieReviews() {
 
-                    function formatTime(str){
+                    function formatTime(str) {
                         var date = new Date(str);
 
                         return date.getFullYear() + '/' +
@@ -206,17 +205,17 @@
                             date.getMinutes();
                     }
 
-                    $.getJSON("/reviews/"+ mno +"/all", function(arr){
-                        var str ="";
+                    $.getJSON("/reviews/" + mno + "/all", function (arr) {
+                        var str = "";
 
-                        $.each(arr, function(idx, review){
+                        $.each(arr, function (idx, review) {
 
                             console.log(review);
 
-                            str += '    <div class="card-body" data-reviewnum='+review.reviewnum+' data-mid='+review.mid+'>';
-                            str += '    <h5 class="card-title">'+review.text+' <span>'+ review.grade+'</span></h5>';
-                            str += '    <h6 class="card-subtitle mb-2 text-muted">'+review.nickname+'</h6>';
-                            str += '    <p class="card-text">'+ formatTime(review.regDate) +'</p>';
+                            str += '    <div class="card-body" data-reviewnum=' + review.reviewnum + ' data-mid=' + review.mid + '>';
+                            str += '    <h5 class="card-title">' + review.text + ' <span>' + review.grade + '</span></h5>';
+                            str += '    <h6 class="card-subtitle mb-2 text-muted">' + review.nickname + '</h6>';
+                            str += '    <p class="card-text">' + formatTime(review.regDate) + '</p>';
                             str += '    </div>';
                         });
 
@@ -231,7 +230,7 @@
 
                 var reviewnum;
 
-                $(".reviewList").on("click", ".card-body", function() {
+                $(".reviewList").on("click", ".card-body", function () {
 
                     $(".reviewSaveBtn").hide();
                     $(".removeBtn , .modifyBtn").show();
@@ -240,30 +239,36 @@
                     var targetReview = $(this);
 
                     reviewnum = targetReview.data("reviewnum");
-                    console.log("reviewnum: "+ reviewnum);
+                    console.log("reviewnum: " + reviewnum);
                     inputMid.val(targetReview.data("mid"));
                     inputText.val(targetReview.find('.card-title').clone().children().remove().end().text());
 
                     var grade = targetReview.find('.card-title span').html();
-                    $(".starrr a:nth-child("+grade+")").trigger('click');
+                    $(".starrr a:nth-child(" + grade + ")").trigger('click');
 
                     $('.reviewModal').modal('show');
                 });
 
 
-                $(".modifyBtn").on("click", function(){
+                $(".modifyBtn").on("click", function () {
 
-                    var data = {reviewnum: reviewnum, mno:mno, grade:grade, text:inputText.val(), mid: inputMid.val() };
+                    var data = {
+                        reviewnum: reviewnum,
+                        mno: mno,
+                        grade: grade,
+                        text: inputText.val(),
+                        mid: inputMid.val()
+                    };
 
                     console.log(data);
 
                     $.ajax({
-                        url:'/reviews/'+mno +"/"+ reviewnum ,
-                        type:"PUT",
-                        data:JSON.stringify(data),
-                        contentType:"application/json; charset=utf-8",
-                        dataType:"text",
-                        success: function(result){
+                        url: '/reviews/' + mno + "/" + reviewnum,
+                        type: "PUT",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "text",
+                        success: function (result) {
 
                             console.log("result: " + result);
 
@@ -274,18 +279,18 @@
                     reviewModal.modal('hide');
                 });
 
-                $(".removeBtn").on("click", function(){
+                $(".removeBtn").on("click", function () {
 
                     var data = {reviewnum: reviewnum};
 
                     console.log(data);
 
                     $.ajax({
-                        url:'/reviews/'+mno +"/"+ reviewnum ,
-                        type:"DELETE",
-                        contentType:"application/json; charset=utf-8",
-                        dataType:"text",
-                        success: function(result){
+                        url: '/reviews/' + mno + "/" + reviewnum,
+                        type: "DELETE",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "text",
+                        success: function (result) {
 
                             console.log("result: " + result);
 
@@ -296,13 +301,13 @@
                     reviewModal.modal('hide');
                 });
 
-                $(".uploadResult li").click(function() {
+                $(".uploadResult li").click(function () {
 
                     var file = $(this).data('file');
 
                     console.log(file);
 
-                    $('.imageModal .modal-body').html("<img style='width:100%' src='/display?fileName="+file+"&size=1' >")
+                    $('.imageModal .modal-body').html("<img style='width:100%' src='/display?fileName=" + file + "&size=1' >")
 
                     $(".imageModal").modal("show");
 

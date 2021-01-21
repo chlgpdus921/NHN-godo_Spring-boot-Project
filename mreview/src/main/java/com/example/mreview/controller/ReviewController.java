@@ -20,7 +20,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/{mno}/all")
-    public ResponseEntity<List<ReviewDTO>> getList(@PathVariable("mno") Long mno){
+    public ResponseEntity<List<ReviewDTO>> getList(@PathVariable("mno") Long mno) {
         log.info("-----list------");
         log.info("MNO: " + mno);
 
@@ -30,32 +30,32 @@ public class ReviewController {
     }
 
     @PostMapping("/{mno}")
-    public ResponseEntity<Long> addReview(@RequestBody ReviewDTO movieReviewDTO){
+    public ResponseEntity<Long> addReview(@RequestBody ReviewDTO movieReviewDTO) {
         log.info("----add MovieReview-----");
         log.info("reviewDTO: " + movieReviewDTO);
 
         Long reviewnum = reviewService.register(movieReviewDTO);
-        return new ResponseEntity<>( reviewnum, HttpStatus.OK);
+        return new ResponseEntity<>(reviewnum, HttpStatus.OK);
     }
 
     @PutMapping("/{mno}/{reviewnum}")
-    public ResponseEntity<Long> modifyReview(@PathVariable Long reviewnum, @RequestBody ReviewDTO movieReviewDTO){
-        log.info("-------modify MovieReview-----" + reviewnum);
+    public ResponseEntity<Long> modifyReview(@PathVariable Long reviewnum, @RequestBody ReviewDTO movieReviewDTO) {
+        log.info("----modify MovieReview-----" + reviewnum);
         log.info("reviewDTO: " + movieReviewDTO);
 
         reviewService.modify(movieReviewDTO);
 
-        return new ResponseEntity<>( reviewnum, HttpStatus.OK);
+        return new ResponseEntity<>(reviewnum, HttpStatus.OK);
     }
 
     @DeleteMapping("/{mno}/{reviewnum}")
-    public ResponseEntity<Long> removeReview( @PathVariable Long reviewnum){
+    public ResponseEntity<Long> removeReview(@PathVariable Long reviewnum) {
         log.info("------modify removeReview-----");
         log.info("reviewnum: " + reviewnum);
 
         reviewService.remove(reviewnum);
 
-        return new ResponseEntity<>( reviewnum, HttpStatus.OK);
+        return new ResponseEntity<>(reviewnum, HttpStatus.OK);
     }
 
 }

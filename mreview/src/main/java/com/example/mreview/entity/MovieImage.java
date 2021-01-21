@@ -14,7 +14,7 @@ public class MovieImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long mno;
+    private Long mno;
     private String uuid; //고유번호 생성
 
     private String imgName;
@@ -22,7 +22,6 @@ public class MovieImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
-
 
 
 }

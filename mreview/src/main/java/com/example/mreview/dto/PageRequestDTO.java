@@ -18,14 +18,14 @@ public class PageRequestDTO {
     private String keyword;
 
 
-    public PageRequestDTO(){
+    public PageRequestDTO() {
         this.page = 1;
         this.size = 10;
     }
 
-    public Pageable getPageable(Sort sort){
+    public Pageable getPageable(Sort sort) {
 
-        return PageRequest.of(page -1, size, sort);
+        return PageRequest.of(page - 1, size, sort);
 
     }
 }

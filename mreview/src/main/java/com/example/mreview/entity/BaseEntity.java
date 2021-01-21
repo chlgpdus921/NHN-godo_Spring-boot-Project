@@ -21,7 +21,7 @@ public class BaseEntity {
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(name ="moddate")
+    @Column(name = "moddate")
     private LocalDateTime modDate;
 
 }

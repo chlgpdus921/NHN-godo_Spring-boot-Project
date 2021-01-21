@@ -36,13 +36,13 @@ public class UploadController {
     private String uploadPath;
 
     @PostMapping("/uploadAjax")
-    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
+    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {
 
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
-        for (MultipartFile uploadFile: uploadFiles) {
+        for (MultipartFile uploadFile : uploadFiles) {
 
-            if(uploadFile.getContentType().startsWith("image") == false) {
+            if (uploadFile.getContentType().startsWith("image") == false) {
                 log.warn("this file is not image type");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
@@ -55,18 +55,18 @@ public class UploadController {
 
             String uuid = UUID.randomUUID().toString();
 
-            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid +"_" + fileName;
+            String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
             Path savePath = Paths.get(saveName);
 
             try {
                 uploadFile.transferTo(savePath);
                 String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator
-                        +"s_" + uuid +"_" + fileName;
+                        + "s_" + uuid + "_" + fileName;
 
                 File thumbnailFile = new File(thumbnailSaveName);
 
-                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,100,100 );
-                resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
+                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -78,7 +78,7 @@ public class UploadController {
     private String makeFolder() {
 
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String folderPath =  str.replace("//", File.separator);
+        String folderPath = str.replace("//", File.separator);
 
         File uploadPathFolder = new File(uploadPath, folderPath);
 
@@ -89,10 +89,10 @@ public class UploadController {
     }
 
     @PostMapping("/removeFile")
-    public ResponseEntity<Boolean> removeFile(String fileName){
+    public ResponseEntity<Boolean> removeFile(String fileName) {
         String srcFileName = null;
 
-        try{
+        try {
             srcFileName = URLDecoder.decode(fileName, "UTF-8");
             File file = new File(uploadPath + File.separator + srcFileName);
             boolean result = file.delete();
@@ -102,7 +102,7 @@ public class UploadController {
             result = thumbnail.delete();
 
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -114,14 +114,14 @@ public class UploadController {
         ResponseEntity<byte[]> result = null;
 
         try {
-            String srcFileName =  URLDecoder.decode(fileName,"UTF-8");
+            String srcFileName = URLDecoder.decode(fileName, "UTF-8");
 
             log.info("fileName: " + srcFileName);
 
-            File file = new File(uploadPath +File.separator+ srcFileName);
+            File file = new File(uploadPath + File.separator + srcFileName);
 
-            if(size != null && size.equals("1")){
-                file  = new File(file.getParent(), file.getName().substring(2));
+            if (size != null && size.equals("1")) {
+                file = new File(file.getParent(), file.getName().substring(2));
             }
 
             log.info("file: " + file);

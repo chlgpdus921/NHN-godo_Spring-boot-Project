@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public List<ReviewDTO> getListOfMovie(Long mno){
+    public List<ReviewDTO> getListOfMovie(Long mno) {
 
         Movie movie = Movie.builder().mno(mno).build();
 
@@ -40,14 +40,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         return movieReview.getReviewnum();
     }
-    
+
     @Override
     public void modify(ReviewDTO movieReviewDTO) {
 
         Optional<Review> result =
                 reviewRepository.findById(movieReviewDTO.getReviewnum());
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
 
             Review movieReview = result.get();
             movieReview.changeGrade(movieReviewDTO.getGrade());
