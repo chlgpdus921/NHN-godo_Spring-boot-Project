@@ -20,10 +20,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
 
+
     @Override
     public List<ReviewDTO> getListOfMovie(Long mno){
 
         Movie movie = Movie.builder().mno(mno).build();
+
         List<Review> result = reviewRepository.findByMovie(movie);
 
         return result.stream().map(movieReview -> entityToDto(movieReview)).collect(Collectors.toList());
@@ -33,11 +35,12 @@ public class ReviewServiceImpl implements ReviewService {
     public Long register(ReviewDTO movieReviewDTO) {
 
         Review movieReview = dtoToEntity(movieReviewDTO);
+
         reviewRepository.save(movieReview);
 
         return movieReview.getReviewnum();
     }
-
+    
     @Override
     public void modify(ReviewDTO movieReviewDTO) {
 
@@ -57,7 +60,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void remove(Long reviewnum) {
+
         reviewRepository.deleteById(reviewnum);
+
     }
 }
 

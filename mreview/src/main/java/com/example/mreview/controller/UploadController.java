@@ -88,30 +88,6 @@ public class UploadController {
         return folderPath;
     }
 
-    @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName) {
-
-        ResponseEntity<byte[]> result = null;
-
-        try {
-            String srcFileName =  URLDecoder.decode(fileName,"UTF-8");
-            log.info("fileName :" + srcFileName);
-
-            File file = new File(uploadPath +File.separator+ srcFileName);
-            log.info("file :" + file);
-
-            HttpHeaders header = new HttpHeaders();
-
-            header.add("Content-Type", Files.probeContentType(file.toPath()));
-            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return result;
-    }
-
     @PostMapping("/removeFile")
     public ResponseEntity<Boolean> removeFile(String fileName){
         String srcFileName = null;
@@ -131,5 +107,36 @@ public class UploadController {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> getFile(String fileName, String size) {
+
+        ResponseEntity<byte[]> result = null;
+
+        try {
+            String srcFileName =  URLDecoder.decode(fileName,"UTF-8");
+
+            log.info("fileName: " + srcFileName);
+
+            File file = new File(uploadPath +File.separator+ srcFileName);
+
+            if(size != null && size.equals("1")){
+                file  = new File(file.getParent(), file.getName().substring(2));
+            }
+
+            log.info("file: " + file);
+
+            HttpHeaders header = new HttpHeaders();
+
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
+    }
+
 
 }

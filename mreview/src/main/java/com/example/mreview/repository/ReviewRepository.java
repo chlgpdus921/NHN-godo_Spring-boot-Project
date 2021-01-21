@@ -3,12 +3,13 @@ package com.example.mreview.repository;
 import com.example.mreview.entity.Member;
 import com.example.mreview.entity.Movie;
 import com.example.mreview.entity.Review;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -19,5 +20,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Modifying
     @Query("delete from Review mr where mr.member = :member")
     void deleteByMember(Member member);
+
+    @EntityGraph(attributePaths = {"member"}, type = EntityGraph.EntityGraphType.FETCH)
+    Page<Review> findAll(Pageable pageable);
 
 }

@@ -26,9 +26,9 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService{
 
-    private final MovieRepository movieRepository;
+    private final MovieRepository movieRepository; //final
 
-    private final MovieImageRepository imageRepository;
+    private final MovieImageRepository imageRepository; //final
 
     @Transactional
     @Override
@@ -43,15 +43,22 @@ public class MovieServiceImpl implements MovieService{
         movieImageList.forEach(movieImage -> {
             imageRepository.save(movieImage);
         });
+
         return movie.getMno();
     }
-
 
     @Override
     public PageResultDTO<MovieDTO, Object[]> getList(PageRequestDTO requestDTO) {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("mno").descending());
+
         Page<Object[]> result = movieRepository.getListPage(pageable);
+
+        log.info("==============================================");
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+
 
         Function<Object[], MovieDTO> fn = (arr -> entitiesToDTO(
                 (Movie)arr[0] ,
@@ -67,6 +74,7 @@ public class MovieServiceImpl implements MovieService{
     public MovieDTO getMovie(Long mno) {
 
         List<Object[]> result = movieRepository.getMovieWithAll(mno);
+
         Movie movie = (Movie) result.get(0)[0];
 
         List<MovieImage> movieImageList = new ArrayList<>();
@@ -82,5 +90,6 @@ public class MovieServiceImpl implements MovieService{
         return entitiesToDTO(movie, movieImageList, avg, reviewCnt);
     }
 
-
 }
+
+
