@@ -29,7 +29,7 @@ public class GuestbookController {
 
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(PageRequestDTO pageRequestDTO, Model model){
 
         log.info("list......" + pageRequestDTO);
 
@@ -38,12 +38,12 @@ public class GuestbookController {
     }
 
     @GetMapping("/register")
-    public void register() {
+    public void register(){
         log.info("regiser get...");
     }
 
     @PostMapping("/register")
-    public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes) {
+    public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes){
 
         log.info("dto..." + dto);
         Long gno = service.register(dto);
@@ -53,14 +53,14 @@ public class GuestbookController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+    public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
         log.info("gno : " + gno);
         GuestbookDTO dto = service.read(gno);
         model.addAttribute("dto", dto);
     }
 
     @PostMapping("/remove")
-    public String remove(long gno, RedirectAttributes redirectAttributes) {
+    public String remove(long gno, RedirectAttributes redirectAttributes){
         log.info("gno : " + gno);
 
         service.remove(gno);
@@ -71,7 +71,7 @@ public class GuestbookController {
 
     @PostMapping("/modify")
     public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes){
 
         log.info("post modify ---- ");
         log.info("dto : " + dto);
@@ -79,8 +79,6 @@ public class GuestbookController {
         service.modify(dto);
 
         redirectAttributes.addAttribute("page", requestDTO.getPage());
-        redirectAttributes.addAttribute("type", requestDTO.getType());
-        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
         redirectAttributes.addAttribute("gno", dto.getGno());
 
         return "redirect:/guestbook/read";

@@ -8,13 +8,10 @@ import com.example.guestbook.entity.Guestbook;
 public interface GuestbookService {
 
     Long register(GuestbookDTO dto);
-
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
-
     GuestbookDTO read(Long gno);
 
     void remove(Long gno);
-
     void modify(GuestbookDTO dto);
 
     default Guestbook dtoToEntity(GuestbookDTO dto) {
@@ -27,9 +24,9 @@ public interface GuestbookService {
         return entity;
     }
 
-    default GuestbookDTO entityToDto(Guestbook entity) {
+    default GuestbookDTO entityToDto(Guestbook entity){
 
-        GuestbookDTO dto = GuestbookDTO.builder()
+        GuestbookDTO dto  = GuestbookDTO.builder()
                 .gno(entity.getGno())
                 .title(entity.getTitle())
                 .content(entity.getContent())

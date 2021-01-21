@@ -14,16 +14,12 @@ public class PageRequestDTO {
     private int page;
     private int size;
 
-
-    private String type;
-    private String keyword;
-
-    public PageRequestDTO() {
+    public PageRequestDTO(){
         this.page = 1;
         this.size = 10;
     }
 
-    public Pageable getPageable(Sort sort) {
-        return PageRequest.of(page - 1, size, sort);
+    public Pageable getPageable(Sort sort){
+        return PageRequest.of(page -1, size, sort);
     }
 }

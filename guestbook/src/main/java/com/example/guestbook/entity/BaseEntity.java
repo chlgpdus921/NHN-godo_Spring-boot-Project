@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 
 @MappedSuperclass
-@EntityListeners(value = {AuditingEntityListener.class})
+@EntityListeners(value = { AuditingEntityListener.class })
 @Getter
 abstract class BaseEntity {
 
@@ -22,7 +22,7 @@ abstract class BaseEntity {
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(name = "moddate")
+    @Column(name ="moddate" )
     private LocalDateTime modDate;
 
 }
